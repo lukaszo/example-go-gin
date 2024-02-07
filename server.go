@@ -5,6 +5,7 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
+	"time"
 
 	"github.com/gin-gonic/gin"
 )
@@ -24,9 +25,13 @@ func main() {
 	r := gin.Default()
 
 	r.GET("/", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "Hello, world!",
-		})
+		if healthy {
+			c.JSON(200, gin.H{
+				"message": "Hello, world!",
+			})
+		} else {
+			c.String(500, "unhealthy")
+		}
 	})
 
 	r.GET("/health", func(c *gin.Context) {
@@ -35,14 +40,6 @@ func main() {
 		} else {
 			c.String(500, "unhealthy")
 		}
-	})
-
-	r.GET("/:name", func(c *gin.Context) {
-		name := c.Param("name")
-
-		c.JSON(200, gin.H{
-			"message": fmt.Sprintf("Hello, %s!", name),
-		})
 	})
 
 	go func() {
@@ -58,6 +55,7 @@ func main() {
 		doneChan <- true
 	}()
 
+	time.Sleep(10 * time.Second)
 	healthy = true
 	<-doneChan
 	healthy = false
