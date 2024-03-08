@@ -19,7 +19,7 @@ func main() {
 	port := os.Getenv("PORT")
 
 	if port == "" {
-		port = "9000"
+		port = "8000"
 	}
 
 	r := gin.Default()
