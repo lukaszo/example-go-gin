@@ -1,7 +1,7 @@
 module example-go-gin
 
-// +heroku goVersion go1.22
-go 1.22
+// +heroku goVersion go1.21
+go 1.21
 
 require github.com/gin-gonic/gin v1.7.4
 
