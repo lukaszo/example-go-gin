@@ -55,7 +55,7 @@ func main() {
 		doneChan <- true
 	}()
 
-	time.Sleep(10 * time.Second)
+	time.Sleep(60 * time.Second)
 	healthy = true
 	<-doneChan
 	healthy = false
